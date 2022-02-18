@@ -61,3 +61,7 @@ lazy val root = (project in file("."))
 
     akkaGrpcCodeGeneratorSettings in Test += "server_power_apis",
   )
+
+publishTo := Some("Releases" at "https://nexus.groupl.es/" + "repository/maven-releases/")
+credentials += Credentials(Path.userHome / ".ivy2" / ".meweCredentials")
+publishMavenStyle := true
