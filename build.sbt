@@ -30,10 +30,10 @@ val kamonCommon         = "io.kamon" %% "kamon-instrumentation-common"  % "2.0.0
 val kamonAkkaHttp       = "io.kamon" %% "kamon-akka-http"               % "2.1.12"
 val kanelaAgent         = "io.kamon" %  "kanela-agent"                  % "1.0.1"
 
-val http25              = "com.typesafe.akka" %% "akka-http"            % "10.1.10"
-val http2Support        = "com.typesafe.akka" %% "akka-http2-support"   % "10.1.10"
-val stream25            = "com.typesafe.akka" %% "akka-stream"          % "2.5.24"
-val akkaGrpcRuntime     = "com.lightbend.akka.grpc" %% "akka-grpc-runtime" % "2.0.0"
+val http25              = "com.typesafe.akka" %% "akka-http"            % "10.2.8"
+val http2Support        = "com.typesafe.akka" %% "akka-http2-support"   % "10.2.8"
+val stream25            = "com.typesafe.akka" %% "akka-stream"          % "2.6.18"
+val akkaGrpcRuntime     = "com.lightbend.akka.grpc" %% "akka-grpc-runtime" % "2.1.3"
 
 
 lazy val root = (project in file("."))
@@ -43,7 +43,7 @@ lazy val root = (project in file("."))
     name := "kamon-akka-grpc",
     moduleName := "kamon-akka-grpc",
     bintrayPackage := "kamon-akka-grpc",
-    crossScalaVersions := Seq("2.12.8", "2.13.0"),
+    crossScalaVersions := Seq("2.12.8", "2.13.8"),
     libraryDependencies ++=
       providedScope(akkaGrpcRuntime) ++
       compileScope(kamonAkkaHttp) ++
@@ -59,8 +59,13 @@ lazy val e2eTest = (project in file("e2eTest"))
   .settings(instrumentationSettings)
   .settings(
     publish / skip := true,
-    crossScalaVersions := Seq("2.12.8", "2.13.0"),
+    crossScalaVersions := Seq("2.12.8", "2.13.8"),
     libraryDependencies ++= testScope(scalatest, slf4jApi, slf4jnop, kamonTestKit),
     akkaGrpcCodeGeneratorSettings in Test += "server_power_apis",
   )
   .dependsOn(root)
+
+
+publishTo := Some("Releases" at "https://nexus.groupl.es/" + "repository/maven-releases/")
+credentials += Credentials(Path.userHome / ".ivy2" / ".meweCredentials")
+publishMavenStyle := true
